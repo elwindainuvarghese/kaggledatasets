@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaggle: Your Machine Learning and Data Science Community</title>
+  <link rel="icon" type="image/x-icon" href="https://www.kaggle.com/static/images/favicon.ico">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/kaggle.css">
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <header class="kg-navbar">
+    <div class="kg-nav-left">
+      <button class="kg-hamburger-btn" title="Toggle Sidebar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+      </button>
+      <a href="https://www.kaggle.com" class="kg-logo-link" title="Open Kaggle.com (https://www.kaggle.com)">
+        <span class="kg-logo-text">kaggle</span>
+      </a>
+    </div>
+
+    <div class="kg-nav-center">
+      <div class="kg-search-box">
+        <span class="kg-search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+        </span>
+        <input type="text" id="global-search-input" class="kg-search-input" placeholder="Search datasets, competitions, notebooks..." />
+      </div>
+    </div>
+
+    <div class="kg-nav-right">
+      <div class="kg-avatar-btn" title="Elwin Varghese">
+        <span>E</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTAINER (SIDEBAR + MAIN) -->
+  <div class="kg-container">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="kg-sidebar">
+      <button class="kg-create-btn" id="open-create-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+        Create
+      </button>
+
+      <!-- Navigation items with direct Kaggle official redirects -->
+      <a href="https://www.kaggle.com/" class="kg-nav-item" id="nav-home">
+        <span class="kg-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </span>
+        <span>Home</span>
+      </a>
+
+      <a href="https://www.kaggle.com/competitions" class="kg-nav-item">
+        <span class="kg-nav-icon">🏆</span>
+        <span>Competitions</span>
+      </a>
+
+      <a href="https://www.kaggle.com/benchmarks" class="kg-nav-item">
+        <span class="kg-nav-icon">📊</span>
+        <span>Benchmarks</span>
+      </a>
+
+      <a href="https://www.kaggle.com/arenas" class="kg-nav-item">
+        <span class="kg-nav-icon">🥊</span>
+        <span>Arenas</span>
+      </a>
+
+      <a href="https://www.kaggle.com/game-arena" class="kg-nav-item">
+        <span class="kg-nav-icon">🤖</span>
+        <span>Game Arena</span>
+      </a>
+
+      <a href="#" class="kg-nav-item active" id="nav-datahub">
+        <span class="kg-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7v10c0 2 3.5 3 8 3s8-1 8-3V7M4 7c0 2 3.5 3 8 3s8-1 8-3M4 7c0-2 3.5-3 8-3s8 1 8 3m0 5c0 2-3.5 3-8 3s-8-1-8-3"/>
+          </svg>
+        </span>
+        <span>Data Hub (Datasets)</span>
+        <span class="kg-chevron">▼</span>
+      </a>
+
+      <a href="#" class="kg-nav-item">
+        <span class="kg-nav-icon">≡</span>
+        <span>More</span>
+        <span class="kg-chevron">▼</span>
+      </a>
+
+      <div class="kg-divider"></div>
+
+      <div class="kg-sidebar-section-title">
+        <span>Your Work</span>
+        <span class="kg-chevron">▲</span>
+      </div>
+
+      <div class="kg-sidebar-section-title" style="margin-top: 4px;">
+        <span>Viewed</span>
+        <span class="kg-chevron">▲</span>
+      </div>
+
+      <div class="kg-viewed-list">
+        <div class="kg-viewed-item" title="Mobile Price Classification">
+          <span class="kg-viewed-item-icon">🚗</span>
+          <span>Mobile Price Classific...</span>
+        </div>
+        <div class="kg-viewed-item" title="5-Day AI Agents: Intensive Vibe Coding">
+          <span class="kg-viewed-item-icon">🤖</span>
+          <span>5-Day AI Agents: Inte...</span>
+        </div>
+        <div class="kg-viewed-item" title="Agents Intensive - Kaggle">
+          <span class="kg-viewed-item-icon">✨</span>
+          <span>Agents Intensive - Ca...</span>
+        </div>
+        <div class="kg-viewed-item" title="View Active Events">
+          <span class="kg-viewed-item-icon">📅</span>
+          <span>View Active Events</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="kg-main">
+
+      <!-- ================= VIEW 1: HOME (EXACT MATCH TO SCREENSHOT) ================= -->
+      <section id="view-home" style="display: none;">
+        <!-- New and Exciting Header -->
+        <div class="kg-section-header">
+          <h2 class="kg-section-title">
+            <span>🔥</span>
+            <span>New and Exciting</span>
+          </h2>
+        </div>
+
+        <!-- 2x2 Announcement Grid -->
+        <div class="kg-exciting-grid">
+          <div class="kg-exciting-card">
+            <div class="kg-card-tag">Announcement</div>
+            <h4 class="kg-card-title">5-Day AI Agents: Intensive Vibe Coding Course With Google</h4>
+            <p class="kg-card-desc">Registration is now open for the 5-Day AI Agents: Intensive Vibecoding Course with Google</p>
+          </div>
+
+          <div class="kg-exciting-card">
+            <div class="kg-card-tag">Blog</div>
+            <h4 class="kg-card-title">Benchmark Research Grants</h4>
+            <p class="kg-card-desc">Apply for compute and infrastructure support for novel research benchmarks</p>
+          </div>
+
+          <div class="kg-exciting-card">
+            <div class="kg-card-tag">Learn</div>
+            <h4 class="kg-card-title">Level Up Your Skills: 2 New Kaggle Learn Guides</h4>
+            <p class="kg-card-desc">Discover how to evaluate models like a pro in "Kaggle Benchmarks Deep Dive" and conquer complex text data in "Intermediate NLP"</p>
+          </div>
+
+          <div class="kg-exciting-card">
+            <div class="kg-card-tag">Announcement</div>
+            <h4 class="kg-card-title">Private Hackathons</h4>
+            <p class="kg-card-desc">Kaggle's new Private option now enables exclusive, closed-door community hackathons for internal teams.</p>
+          </div>
+        </div>
+
+        <!-- Featured Dataset Card Link -->
+        <div style="background: linear-gradient(135deg, #F0F9FF, #E0F2FE); border: 1px solid #BAE6FD; border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #0284C7; text-transform: uppercase;">
+              <span>📁</span> Ready to Download Dataset Files
+            </div>
+            <h3 style="font-size: 18px; font-weight: 700; color: #0F172A; margin: 4px 0;">Housing Price, CART & Python Regression Models</h3>
+            <p style="font-size: 13px; color: #475569;">Access all 12 dataset files uploaded in this folder (house_price_dataset.csv, CART.csv, regression_tree.png, elwin1.py-elwin9.py).</p>
+          </div>
+          <button class="kg-btn kg-btn-primary" onclick="switchView('dataset')">
+            Open Dataset Explorer →
+          </button>
+        </div>
+
+        <!-- New from Kagglers you follow -->
+        <div class="kg-newsfeed-section">
+          <div class="kg-section-header">
+            <h2 class="kg-section-title">
+              <span>📰</span>
+              <span>New from Kagglers you follow</span>
+            </h2>
+          </div>
+          <p class="kg-newsfeed-info">
+            The newsfeed is now in an experimental state! Now you will see new content from only users you follow, and announcements from Kaggle.
+          </p>
+
+          <!-- Kaggle Feed Item -->
+          <div class="kg-feed-card">
+            <div class="kg-feed-header">
+              <div class="kg-feed-author">
+                <div class="kg-author-avatar">K</div>
+                <div class="kg-author-details">
+                  <div class="kg-author-name">Kaggle</div>
+                  <div class="kg-post-time">posted a dataset 17 hours ago</div>
+                </div>
+              </div>
+              <div class="kg-upvote-pill">
+                <span>▲</span>
+                <span>4</span>
+              </div>
+            </div>
+
+            <div style="cursor: pointer;" onclick="switchView('dataset')">
+              <h4 style="font-size: 16px; font-weight: 700; color: #202124; margin-bottom: 6px;">
+                House Price & CART Machine Learning Dataset Collection
+              </h4>
+              <p style="font-size: 13px; color: #5F6368; line-height: 1.5; margin-bottom: 12px;">
+                Complete dataset featuring real estate sales features, classification and regression trees (CART), model visualizations, and 9 Python training scripts.
+              </p>
+              <div style="display: flex; gap: 8px;">
+                <span class="kg-tag-pill">Tabular Data</span>
+                <span class="kg-tag-pill">Housing</span>
+                <span class="kg-tag-pill">Regression Trees</span>
+                <span class="kg-tag-pill">Python</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 2: DATASET & FILE EXPLORER ================= -->
+      <section id="view-dataset" style="display: flex;" class="kg-dataset-view">
+        
+        <!-- Dataset Banner Header -->
+        <div class="kg-dataset-header">
+          <div class="kg-breadcrumb">
+            <a href="#" onclick="switchView('home'); return false;">Datasets</a>
+            <span>/</span>
+            <a href="#" onclick="return false;">elwinvarghese</a>
+            <span>/</span>
+            <span>Kaggle Workspace Dataset</span>
+          </div>
+
+          <div class="kg-dataset-title-row">
+            <div class="kg-dataset-title-block">
+              <h1>Housing Price, CART & Machine Learning Models</h1>
+              <p class="kg-dataset-subtitle">
+                Complete dataset collection uploaded in this workspace including <code>house_price_dataset.csv</code>, <code>CART.csv</code>, <code>regression_tree.png</code>, and Python regression pipelines (<code>elwin1.py</code> to <code>elwin9.py</code>).
+              </p>
+            </div>
+
+            <div class="kg-action-bar">
+              <button class="kg-btn kg-btn-secondary">
+                <span style="color: #20BEFF;">▲</span>
+                <span>Upvote 142</span>
+              </button>
+
+              <!-- Main Top Download Button -->
+              <button class="kg-btn kg-btn-download" id="header-download-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+                </svg>
+                <span>Download All (ZIP)</span>
+              </button>
+
+              <button class="kg-btn kg-btn-secondary" onclick="document.getElementById('open-create-btn').click();">
+                + New Notebook
+              </button>
+            </div>
+          </div>
+
+          <!-- Dataset Metadata Badges -->
+          <div class="kg-dataset-meta-row">
+            <div class="kg-author-chip">
+              <div class="avatar">E</div>
+              <span>Elwin Varghese</span>
+            </div>
+            <span>•</span>
+            <span>Updated just now</span>
+            <span>•</span>
+            <span class="kg-badge-usability">Usability 10.00</span>
+            <span>•</span>
+            <span>License: CC0: Public Domain</span>
+            <span class="kg-tag-pill">Tabular Data</span>
+            <span class="kg-tag-pill">Exploratory Data Analysis</span>
+            <span class="kg-tag-pill">Machine Learning</span>
+          </div>
+
+          <!-- Tabs -->
+          <div class="kg-tabs">
+            <button class="kg-tab-btn active">Data</button>
+            <button class="kg-tab-btn">Code (9)</button>
+            <button class="kg-tab-btn">Discussion (14)</button>
+            <button class="kg-tab-btn">Activity</button>
+            <button class="kg-tab-btn">Settings</button>
+          </div>
+        </div>
+
+        <!-- ================= DATA EXPLORER ================= -->
+        <div class="kg-data-explorer">
+          
+          <!-- LEFT PANE: FOLDER & FILE LIST -->
+          <div class="kg-explorer-left">
+            <div class="kg-explorer-header">
+              <div class="kg-explorer-title-row">
+                <span class="kg-explorer-title">📁 Data Explorer</span>
+                <span class="kg-explorer-sub" id="total-size-badge">Loading...</span>
+              </div>
+              <div class="kg-file-search">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#5F6368">
+                  <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" id="file-search-input" placeholder="Search files in dataset..." />
+              </div>
+            </div>
+
+            <!-- Dynamic File Tree List -->
+            <div class="kg-file-list" id="file-list-container">
+              <!-- Rendered via kaggle.js -->
+            </div>
+
+            <!-- Upload Dropzone -->
+            <div class="kg-explorer-footer">
+              <div class="kg-upload-dropzone" id="upload-dropzone">
+                <span>+ Upload or drop files here</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT PANE: FILE PREVIEW & DOWNLOAD -->
+          <div class="kg-explorer-right">
+            <!-- Preview Header with prominent Download Button -->
+            <div class="kg-preview-header">
+              <div class="kg-preview-file-info">
+                <div>
+                  <div class="kg-preview-title" id="preview-file-title">Select a file</div>
+                  <div class="kg-preview-meta" id="preview-file-meta">Select any file from the explorer to preview</div>
+                </div>
+              </div>
+
+              <!-- Dedicated File Download Button -->
+              <button class="kg-btn kg-btn-download" id="preview-download-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                <span>Download File</span>
+              </button>
+            </div>
+
+            <!-- CSV Statistics Summary Bar -->
+            <div class="kg-stats-summary" id="stats-summary-bar" style="display: none;">
+              <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Live Content Viewer -->
+            <div class="kg-preview-content" id="preview-content-area">
+              <div style="padding: 40px; text-align: center; color: #888;">
+                Loading preview...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABOUT DATASET SECTION -->
+        <div style="margin-top: 32px; border-top: 1px solid #ECEFF1; padding-top: 24px;">
+          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">About Dataset</h3>
+          <p style="font-size: 14px; line-height: 1.6; color: #3c4043; margin-bottom: 16px;">
+            This dataset contains clean tabular records for machine learning model training and predictive analytics:
+          </p>
+          <ul style="font-size: 14px; line-height: 1.8; color: #3c4043; margin-left: 24px; margin-bottom: 20px;">
+            <li><strong>house_price_dataset.csv</strong>: 1,000 real estate properties with columns including <code>Area_sqft</code>, <code>Bedrooms</code>, <code>Bathrooms</code>, <code>Age_years</code>, <code>Distance_to_city_km</code>, <code>Floor_number</code>, <code>Parking_spaces</code>, <code>Locality_rating</code>, <code>Furnishing_status</code>, and <code>Price_Lakhs</code>.</li>
+            <li><strong>CART.csv</strong>: Classification and Regression Tree credit history dataset with <code>Age_Group</code>, <code>Credit_History</code>, and <code>Loan_Status</code>.</li>
+            <li><strong>regression_tree.png</strong>: High-resolution visual decision tree illustrating optimal feature split thresholds.</li>
+            <li><strong>elwin1.py to elwin9.py</strong>: Complete regression modeling scripts performing train/test splits, model fitting, R² and MSE evaluation, and scatter plot visualizations.</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CREATE / UPLOAD MODAL -->
+  <div class="kg-modal-overlay" id="create-modal">
+    <div class="kg-modal">
+      <div class="kg-modal-header">
+        <h3 class="kg-modal-title">+ Add to Dataset</h3>
+        <button class="kg-modal-close" id="close-create-btn">&times;</button>
+      </div>
+      <div class="kg-modal-body">
+        <div class="kg-upload-box" id="modal-dropzone">
+          <div class="kg-upload-icon">☁️</div>
+          <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">Click to select or drag and drop files here</div>
+          <div style="font-size: 12px; color: #5f6368;">Files will be saved directly into this dataset directory and ready for instant download.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden File Input for Browser Uploads -->
+  <input type="file" id="file-upload-input" style="display: none;" />
+
+  <!-- Toast Notification -->
+  <div class="kg-toast" id="kg-toast">Notification message</div>
+
+  <!-- App Script -->
+  <script src="/static/js/kaggle.js"></script>
+</body>
+</html>
