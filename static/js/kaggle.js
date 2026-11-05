@@ -115,7 +115,7 @@ async function fetchFiles(selectFirst = false) {
       }
 
       if (selectFirst && datasetFiles.length > 0) {
-        const preferred = datasetFiles.find(f => f.name.includes('linear regression') || f.name.includes('Classification and Regression Trees')) || datasetFiles[0];
+        const preferred = datasetFiles.find(f => f.name.includes('dataset load') || f.name.includes('linear regression')) || datasetFiles[0];
         selectFile(preferred.name);
       }
     }

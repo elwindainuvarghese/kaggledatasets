@@ -13,6 +13,13 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Dataset metadata mapping: machine learning algorithms & techniques requested by user
 DATASET_MAP = {
+    'dataset load.csv': {
+        'display_name': 'dataset load.csv',
+        'type_label': 'Environment & Dependencies Table',
+        'category': 'Environment Setup',
+        'download_as': 'dataset load.csv',
+        'description': 'Python 3.13 dependencies installation command: py -3.13 -m pip install numpy pandas matplotlib scikit-learn scipy'
+    },
     'elwin1.py': {
         'display_name': 'linear regression dataset.csv',
         'type_label': 'Linear Regression Table',
@@ -348,6 +355,7 @@ def get_file_list():
     }
     # Pre-defined display order
     order_keys = [
+        'dataset load.csv',
         'elwin1.py',
         'elwin2.py',
         'cartbackupdataset.py',

@@ -1,0 +1,7 @@
+Instruction,Command,Packages
+Dependencies Setup,py -3.13 -m pip install numpy pandas matplotlib scikit-learn scipy,"numpy, pandas, matplotlib, scikit-learn, scipy"
+NumPy Engine,pip install numpy,numpy
+Data Structures & Tables,pip install pandas,pandas
+Plotting & Charts,pip install matplotlib,matplotlib
+Machine Learning Algorithms,pip install scikit-learn,scikit-learn
+Scientific & Spatial Distance,pip install scipy,scipy
