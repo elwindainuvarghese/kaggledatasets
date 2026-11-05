@@ -11,70 +11,70 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 # Base directory where dataset files live
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# Dataset metadata mapping: realistic domain-specific Kaggle datasets
+# Dataset metadata mapping: machine learning algorithms & techniques requested by user
 DATASET_MAP = {
     'elwin1.py': {
-        'display_name': 'used_car_market_dataset.csv',
-        'type_label': 'CSV Table',
-        'category': 'Automotive & Sales',
+        'display_name': 'linear regression dataset.csv',
+        'type_label': 'Linear Regression Table',
+        'category': 'Linear Regression',
         'download_as': 'elwin1.py',
-        'description': 'Used vehicle pricing dataset with one-hot encoded variables and linear regression price estimation.'
+        'description': 'Linear regression dataset with model coefficients, actual vs predicted target values, and residual errors.'
     },
     'elwin2.py': {
-        'display_name': 'loan_credit_risk_dataset.csv',
-        'type_label': 'CSV Table',
-        'category': 'Finance & Banking',
+        'display_name': 'Classification and Regression Trees dataset.csv',
+        'type_label': 'CART Decision Tree Table',
+        'category': 'Decision Trees & CART',
         'download_as': 'elwin2.py',
-        'description': 'Credit history and loan approval risk evaluation dataset with label encoding and CART trees.'
+        'description': 'Classification and Regression Trees (CART) dataset with Gini impurity calculations and node split criteria.'
     },
     'elwin3.py': {
-        'display_name': 'housing_market_valuation.csv',
-        'type_label': 'CSV Table',
-        'category': 'Housing & Real Estate',
+        'display_name': 'regression trees analysis dataset.csv',
+        'type_label': 'Regression Tree Table',
+        'category': 'Decision Trees & Regression',
         'download_as': 'elwin3.py',
-        'description': 'Housing price regression tree dataset with multi-feature square footage and locality rating splits.'
+        'description': 'Decision tree regression dataset evaluating continuous features, mean squared error, and tree depth.'
     },
     'elwin4.py': {
-        'display_name': 'breast_cancer_diagnostic_dataset.csv',
-        'type_label': 'CSV Table',
-        'category': 'Medicine & Healthcare',
+        'display_name': 'ensemble random forest dataset.csv',
+        'type_label': 'Random Forest Table',
+        'category': 'Ensemble Learning',
         'download_as': 'elwin4.py',
-        'description': 'Diagnostic oncology dataset with cellular characteristics and Random Forest feature importance.'
+        'description': 'Random forest ensemble dataset illustrating bootstrap aggregation (bagging) and voting predictions.'
     },
     'elwin5.py': {
-        'display_name': 'wine_quality_sensory_features.csv',
-        'type_label': 'CSV Table',
-        'category': 'Food & Agriculture',
+        'display_name': 'Dimensionality Reduction Techniques dataset.csv',
+        'type_label': 'PCA & Dimensionality Table',
+        'category': 'Dimensionality Reduction',
         'download_as': 'elwin5.py',
-        'description': 'Wine sensory and chemical analysis dataset with PCA scree plots and cumulative variance dimensions.'
+        'description': 'Dimensionality reduction techniques dataset analyzing Principal Component Analysis (PCA) and cumulative variance.'
     },
     'elwin6.py': {
-        'display_name': 'clinical_cancer_biomarkers.csv',
-        'type_label': 'CSV Table',
-        'category': 'Bioinformatics & Genetics',
+        'display_name': 'linear Support Vector Machine dataset.csv',
+        'type_label': 'Linear SVM Table',
+        'category': 'Support Vector Machines',
         'download_as': 'elwin6.py',
-        'description': 'Clinical biomarker records with train/test validation splits and classification benchmarks.'
+        'description': 'Linear Support Vector Machine dataset with maximum margin separating hyperplanes and support vectors.'
     },
     'elwin7.py': {
-        'display_name': 'svm_classifier_decision_space.csv',
-        'type_label': 'CSV Table',
-        'category': 'Algorithms & AI',
+        'display_name': 'non-linear Support Vector Machine dataset.csv',
+        'type_label': 'Non-linear SVM Table',
+        'category': 'Support Vector Machines',
         'download_as': 'elwin7.py',
-        'description': 'Support Vector Machine kernel performance dataset evaluating linear, polynomial, and RBF decision boundaries.'
+        'description': 'Non-linear Support Vector Machine dataset comparing Polynomial, Gaussian (RBF), and Sigmoid kernel spaces.'
     },
     'elwin8.py': {
-        'display_name': 'spatial_coordinate_mst_clusters.csv',
-        'type_label': 'CSV Table',
-        'category': 'Geospatial & Clustering',
+        'display_name': 'Graph-Based Clustering dataset.csv',
+        'type_label': 'Graph Clustering Table',
+        'category': 'Graph-Based Clustering',
         'download_as': 'elwin8.py',
-        'description': 'Spatial distance matrix and Euclidean coordinates dataset with Minimum Spanning Tree clustering.'
+        'description': 'Graph-based clustering dataset utilizing Euclidean pairwise distance matrices and Minimum Spanning Trees (MST).'
     },
     'elwin9.py': {
-        'display_name': 'dbscan_cellular_density_clusters.csv',
-        'type_label': 'CSV Table',
-        'category': 'Biological Science',
+        'display_name': 'Density-Based Spatial Clustering dataset.csv',
+        'type_label': 'DBSCAN Spatial Table',
+        'category': 'Density-Based Clustering',
         'download_as': 'elwin9.py',
-        'description': 'Density-Based Spatial Clustering (DBSCAN) dataset analyzing core samples, border points, and cluster distributions.'
+        'description': 'Density-Based Spatial Clustering of Applications with Noise (DBSCAN) dataset analyzing core samples, border points, and noise.'
     },
     'house_price_dataset.csv': {
         'display_name': 'house_price_dataset.csv',
@@ -86,7 +86,7 @@ DATASET_MAP = {
     'CART.csv': {
         'display_name': 'CART.csv',
         'type_label': 'CSV Table',
-        'category': 'Credit & Lending',
+        'category': 'Classification and Regression Trees',
         'download_as': 'CART.csv',
         'description': 'Classification and Regression Tree dataset with age groups, credit history, and loan approval status.'
     },
@@ -103,8 +103,22 @@ REVERSE_MAP = {v['display_name']: k for k, v in DATASET_MAP.items()}
 
 def resolve_file(name_or_display):
     """Resolve display name or disk filename to actual disk filename."""
+    if not name_or_display:
+        return name_or_display
     if name_or_display in REVERSE_MAP:
         return REVERSE_MAP[name_or_display]
+        
+    norm = name_or_display.lower().strip()
+    norm_under = norm.replace(' ', '_')
+    norm_space = norm.replace('_', ' ')
+    
+    for k, v in DATASET_MAP.items():
+        disp = v['display_name'].lower()
+        if norm == disp or norm_under == disp.replace(' ', '_') or norm_space == disp.replace('_', ' '):
+            return k
+        if norm == k.lower():
+            return k
+            
     return name_or_display
 
 def format_size(bytes_size):
@@ -121,163 +135,171 @@ def generate_sample_dataset(script_name):
     np.random.seed(42 + abs(hash(script_name)) % 1000)
     
     if script_name == 'elwin1.py':
-        models = ['Toyota Corolla', 'Honda Civic', 'Hyundai Elantra', 'Ford Focus', 'BMW 320i', 'Audi A4', 'Mercedes C200', 'Volkswagen Golf', 'Nissan Sentra', 'Mazda 3']
-        fuel_types = ['Petrol', 'Diesel', 'Hybrid', 'Electric']
-        transmissions = ['Automatic', 'Manual']
+        # Linear Regression dataset
         n = 100
+        x1 = np.random.uniform(1.2, 5.0, n)
+        x2 = np.random.randint(2012, 2024, n)
+        x3 = np.random.randint(10000, 150000, n)
+        price_actual = np.round(15000 + (x2 - 2012) * 2200 + x1 * 4500 - (x3 / 1000) * 110 + np.random.normal(0, 800, n), 2)
+        price_pred = np.round(15000 + (x2 - 2012) * 2200 + x1 * 4500 - (x3 / 1000) * 110, 2)
+        residual = np.round(price_actual - price_pred, 2)
         data = {
-            'Car_Model': [models[i % len(models)] for i in range(n)],
-            'Year': np.random.randint(2014, 2024, n),
-            'Kilometers_Driven': np.random.randint(12000, 160000, n),
-            'Fuel_Type': np.random.choice(fuel_types, n, p=[0.45, 0.35, 0.15, 0.05]),
-            'Transmission': np.random.choice(transmissions, n, p=[0.65, 0.35]),
-            'Engine_CC': np.random.choice([1197, 1498, 1798, 1995, 2498], n),
-            'Power_bhp': np.random.randint(85, 245, n),
-            'Price_USD': np.random.randint(8500, 48000, n)
+            'Record_ID': [f'LR-{1000 + i}' for i in range(n)],
+            'Engine_Capacity_L': np.round(x1, 2),
+            'Manufacture_Year': x2,
+            'Mileage_km': x3,
+            'Actual_Price_USD': price_actual,
+            'Predicted_Price_USD': price_pred,
+            'Residual_Error': residual
         }
         return pd.DataFrame(data), 1250
 
     elif script_name == 'elwin2.py':
-        purposes = ['Debt Consolidation', 'Home Improvement', 'Small Business', 'Major Purchase', 'Education']
-        home_status = ['MORTGAGE', 'RENT', 'OWN']
-        loan_status = ['Approved', 'Rejected']
+        # Classification and Regression Trees (CART)
         n = 100
+        age_groups = ['Young', 'Middle-Aged', 'Senior']
+        credit_hist = ['Good', 'Fair', 'Poor']
+        loan_status = ['Approved', 'Rejected']
+        gini = np.round(np.random.uniform(0.12, 0.48, n), 3)
         data = {
-            'Applicant_ID': [f'APP-{10000 + i}' for i in range(n)],
-            'Age': np.random.randint(21, 65, n),
-            'Annual_Income_USD': np.random.randint(28000, 145000, n),
-            'Home_Ownership': np.random.choice(home_status, n, p=[0.5, 0.4, 0.1]),
-            'Employment_Years': np.random.randint(1, 25, n),
-            'Loan_Purpose': np.random.choice(purposes, n),
-            'Credit_Score': np.random.randint(580, 830, n),
-            'Loan_Amount_USD': np.random.randint(3000, 45000, n),
-            'Loan_Status': np.random.choice(loan_status, n, p=[0.74, 0.26])
+            'Applicant_ID': [f'CART-{2000 + i}' for i in range(n)],
+            'Age_Group': np.random.choice(age_groups, n),
+            'Credit_History': np.random.choice(credit_hist, n, p=[0.45, 0.35, 0.20]),
+            'Annual_Income_kUSD': np.random.randint(32, 160, n),
+            'Decision_Tree_Node': [f'Node_{x}' for x in np.random.randint(1, 8, n)],
+            'Gini_Impurity': gini,
+            'Loan_Approval_Status': np.random.choice(loan_status, n, p=[0.72, 0.28])
         }
         return pd.DataFrame(data), 2400
 
     elif script_name == 'elwin3.py':
+        # Regression Tree Housing Analysis
         n = 100
-        area = np.random.randint(650, 4200, n)
+        area = np.random.randint(700, 4000, n)
         bedrooms = np.random.randint(1, 6, n)
         locality = np.random.randint(1, 10, n)
-        price = area * np.random.uniform(110, 210, n) + bedrooms * 12000 + locality * 8000
+        actual_price = np.round((area * 0.045 + bedrooms * 3.5 + locality * 2.8), 2)
+        pred_price = np.round((area * 0.044 + bedrooms * 3.6 + locality * 2.7), 2)
         data = {
-            'Property_ID': [f'PROP-{5000 + i}' for i in range(n)],
+            'Property_ID': [f'REG-{5000 + i}' for i in range(n)],
             'Area_sqft': area,
             'Bedrooms': bedrooms,
             'Bathrooms': np.random.randint(1, 4, n),
-            'Age_Years': np.random.randint(1, 35, n),
-            'Distance_City_km': np.round(np.random.uniform(1.2, 28.5, n), 1),
             'Locality_Rating': locality,
-            'Valuation_USD': np.round(price, -2).astype(int)
+            'Tree_Split_Depth': np.random.randint(1, 6, n),
+            'Actual_Price_Lakhs': actual_price,
+            'Predicted_Price_Lakhs': pred_price,
+            'MSE_Loss': np.round((actual_price - pred_price) ** 2, 4)
         }
-        return pd.DataFrame(data), 1800
+        return pd.DataFrame(data), 1000
 
     elif script_name == 'elwin4.py':
-        try:
-            from sklearn.datasets import load_breast_cancer
-            bc = load_breast_cancer(as_frame=True)
-            df = bc.frame.iloc[:100].copy()
-            df.columns = [c.replace(' ', '_').capitalize() for c in df.columns]
-            df['Diagnosis'] = df['Target'].map({0: 'Malignant', 1: 'Benign'})
-            df = df.drop(columns=['Target'])
-            keep_cols = ['Mean_radius', 'Mean_texture', 'Mean_perimeter', 'Mean_area', 'Mean_smoothness', 'Mean_compactness', 'Mean_concavity', 'Diagnosis']
-            return df[keep_cols], 569
-        except Exception:
-            n = 100
-            data = {
-                'Mean_radius': np.round(np.random.uniform(10.5, 28.1, n), 2),
-                'Mean_texture': np.round(np.random.uniform(12.0, 39.2, n), 2),
-                'Mean_perimeter': np.round(np.random.uniform(65.0, 188.5, n), 1),
-                'Mean_area': np.round(np.random.uniform(320.0, 2500.0, n), 1),
-                'Mean_smoothness': np.round(np.random.uniform(0.06, 0.16, n), 4),
-                'Mean_compactness': np.round(np.random.uniform(0.02, 0.34, n), 4),
-                'Mean_concavity': np.round(np.random.uniform(0.01, 0.42, n), 4),
-                'Diagnosis': np.random.choice(['Benign', 'Malignant'], n, p=[0.63, 0.37])
-            }
-            return pd.DataFrame(data), 569
+        # Ensemble Random Forest
+        n = 100
+        v0 = np.random.randint(10, 85, n)
+        v1 = 100 - v0
+        pred = ['Malignant' if v0 > 50 else 'Benign' for v0 in v0]
+        data = {
+            'Sample_ID': [f'RF-{3000 + i}' for i in range(n)],
+            'Mean_Radius': np.round(np.random.uniform(10.5, 27.5, n), 2),
+            'Mean_Texture': np.round(np.random.uniform(11.2, 38.0, n), 2),
+            'Mean_Perimeter': np.round(np.random.uniform(62.0, 185.0, n), 1),
+            'Mean_Area': np.round(np.random.uniform(310.0, 2400.0, n), 1),
+            'Tree_Votes_Class_0': v0,
+            'Tree_Votes_Class_1': v1,
+            'Random_Forest_Prediction': pred
+        }
+        return pd.DataFrame(data), 569
 
     elif script_name == 'elwin5.py':
-        try:
-            from sklearn.datasets import load_wine
-            wine = load_wine(as_frame=True)
-            df = wine.frame.iloc[:100].copy()
-            df.columns = [c.replace(' ', '_').replace('/', '_').capitalize() for c in df.columns]
-            df['Quality_grade'] = df['Target'].map({0: 'Class_A', 1: 'Class_B', 2: 'Class_C'})
-            df = df.drop(columns=['Target'])
-            keep_cols = ['Alcohol', 'Malic_acid', 'Ash', 'Alcalinity_of_ash', 'Magnesium', 'Total_phenols', 'Flavanoids', 'Quality_grade']
-            return df[keep_cols], 178
-        except Exception:
-            n = 100
-            data = {
-                'Alcohol': np.round(np.random.uniform(11.0, 14.8, n), 2),
-                'Malic_acid': np.round(np.random.uniform(0.74, 5.80, n), 2),
-                'Ash': np.round(np.random.uniform(1.36, 3.23, n), 2),
-                'Alcalinity_of_ash': np.round(np.random.uniform(10.6, 30.0, n), 1),
-                'Magnesium': np.random.randint(70, 162, n),
-                'Total_phenols': np.round(np.random.uniform(0.98, 3.88, n), 2),
-                'Flavanoids': np.round(np.random.uniform(0.34, 5.08, n), 2),
-                'Quality_grade': np.random.choice(['Class_A', 'Class_B', 'Class_C'], n, p=[0.33, 0.40, 0.27])
-            }
-            return pd.DataFrame(data), 178
+        # Dimensionality Reduction Techniques (PCA)
+        n = 100
+        pc1 = np.round(np.random.normal(0, 2.4, n), 3)
+        pc2 = np.round(np.random.normal(0, 1.6, n), 3)
+        pc3 = np.round(np.random.normal(0, 1.1, n), 3)
+        data = {
+            'Wine_Sample_ID': [f'PCA-{i+1:04d}' for i in range(n)],
+            'Principal_Component_1': pc1,
+            'Principal_Component_2': pc2,
+            'Principal_Component_3': pc3,
+            'Alcohol_Pct': np.round(np.random.uniform(11.2, 14.8, n), 2),
+            'Color_Intensity': np.round(np.random.uniform(1.8, 12.0, n), 2),
+            'Explained_Variance_PC1': [0.362] * n,
+            'Cumulative_Variance_8PCs': [0.925] * n,
+            'Wine_Cluster_Class': np.random.choice(['Cultivar 1', 'Cultivar 2', 'Cultivar 3'], n)
+        }
+        return pd.DataFrame(data), 178
 
     elif script_name == 'elwin6.py':
+        # Linear Support Vector Machine
         n = 100
+        rad = np.round(np.random.uniform(-2.2, 2.5, n), 3)
+        tex = np.round(np.random.uniform(-2.0, 2.4, n), 3)
+        dist = np.round(rad * 0.95 - tex * 0.75 + 0.15, 3)
+        sv = ['Support Vector' if abs(d) <= 1.05 else 'Interior Point' for d in dist]
+        pred = [1 if d >= 0 else -1 for d in dist]
         data = {
-            'Patient_ID': [f'PT-{7000 + i}' for i in range(n)],
-            'Age': np.random.randint(30, 80, n),
-            'Tumor_Stage': np.random.choice(['Stage I', 'Stage II', 'Stage III', 'Stage IV'], n, p=[0.25, 0.4, 0.25, 0.1]),
-            'HER2_Status': np.random.choice(['Positive', 'Negative'], n, p=[0.3, 0.7]),
-            'Estrogen_Receptor_Pct': np.random.randint(5, 98, n),
-            'CA125_U_ml': np.round(np.random.uniform(10.5, 95.0, n), 1),
-            'Biomarker_Index': np.round(np.random.uniform(0.12, 4.85, n), 2),
-            'Response_Outcome': np.random.choice(['Complete Response', 'Partial Response', 'Stable Disease'], n)
+            'Sample_ID': [f'SVM-LIN-{i+1:04d}' for i in range(n)],
+            'Scaled_Mean_Radius': rad,
+            'Scaled_Mean_Texture': tex,
+            'Hyperplane_Margin_Distance': dist,
+            'Support_Vector_Type': sv,
+            'Linear_Kernel_Value': np.round(rad * tex, 4),
+            'Predicted_Target': pred
         }
-        return pd.DataFrame(data), 850
+        return pd.DataFrame(data), 569
 
     elif script_name == 'elwin7.py':
+        # Non-Linear Support Vector Machine
         n = 100
-        f1 = np.random.normal(0, 1.5, n)
-        f2 = np.random.normal(0, 1.5, n)
-        dist = np.round(np.abs(f1 * 0.8 - f2 * 1.2 + 0.3), 3)
-        labels = ['Class_Alpha' if (f1[i] + f2[i] > 0) else 'Class_Beta' for i in range(n)]
+        x1 = np.round(np.random.normal(0, 1.4, n), 3)
+        x2 = np.round(np.random.normal(0, 1.4, n), 3)
+        poly = np.round((x1 * x2 + 1.0) ** 3, 3)
+        rbf = np.round(np.exp(-0.5 * (x1**2 + x2**2)), 4)
+        sig = np.round(np.tanh(x1 * x2 + 0.5), 3)
         data = {
-            'Sample_ID': [f'SMP-{i+1:04d}' for i in range(n)],
-            'Feature_X1': np.round(f1, 4),
-            'Feature_X2': np.round(f2, 4),
-            'Feature_X3': np.round(np.random.normal(2, 0.8, n), 4),
-            'Kernel_Projection': np.round(np.tanh(f1 * f2), 4),
-            'Margin_Distance': dist,
-            'Support_Vector': ['Yes' if d < 0.45 else 'No' for d in dist],
-            'Target_Class': labels
+            'Sample_ID': [f'SVM-NL-{i+1:04d}' for i in range(n)],
+            'Feature_1': x1,
+            'Feature_2': x2,
+            'Polynomial_Kernel_Deg3': poly,
+            'RBF_Gaussian_Kernel': rbf,
+            'Sigmoid_Kernel_Score': sig,
+            'Optimal_Support_Vector': np.random.choice(['Yes', 'No'], n, p=[0.38, 0.62]),
+            'NonLinear_Class_Label': ['Class_1' if rbf > 0.4 else 'Class_-1' for rbf in rbf]
         }
-        return pd.DataFrame(data), 1100
+        return pd.DataFrame(data), 569
 
     elif script_name == 'elwin8.py':
+        # Graph-Based Clustering (Minimum Spanning Tree)
         n = 100
+        cx = np.round(np.uniform if hasattr(np, 'uniform') else np.random.uniform(0.5, 8.5, n), 3)
+        cy = np.round(np.random.uniform(0.5, 8.5, n), 3)
+        weights = np.round(np.random.uniform(0.08, 2.95, n), 3)
         data = {
-            'Node_ID': [f'ND-{100 + i}' for i in range(n)],
-            'Latitude': np.round(np.random.uniform(37.70, 37.82, n), 5),
-            'Longitude': np.round(np.random.uniform(-122.52, -122.38, n), 5),
-            'Elevation_m': np.random.randint(5, 280, n),
-            'Spatial_Density': np.round(np.random.uniform(14.2, 88.5, n), 2),
-            'Neighbor_Count': np.random.randint(3, 18, n),
-            'MST_Edge_Weight': np.round(np.random.uniform(0.05, 3.40, n), 3),
-            'Cluster_ID': [f'Cluster_{x}' for x in np.random.choice([1, 2, 3, 4], n)]
+            'Node_ID': [f'MST-NODE-{100 + i}' for i in range(n)],
+            'Coordinate_X': cx,
+            'Coordinate_Y': cy,
+            'MST_Edge_Weight': weights,
+            'In_Minimum_Spanning_Tree': np.random.choice(['Yes', 'Connected'], n, p=[0.75, 0.25]),
+            'Graph_Connected_Component': [f'Cluster_{c}' for c in np.random.choice([1, 2, 3], n, p=[0.38, 0.35, 0.27])],
+            'Degree_Centrality': np.random.randint(1, 7, n)
         }
         return pd.DataFrame(data), 920
 
     elif script_name == 'elwin9.py':
+        # Density-Based Spatial Clustering (DBSCAN)
         n = 100
-        cdist = np.round(np.random.uniform(0.08, 1.95, n), 3)
+        cdist = np.round(np.random.uniform(0.08, 2.10, n), 3)
+        ptypes = ['Core Point' if c < 0.65 else ('Border Point' if c < 1.35 else 'Noise') for c in cdist]
+        clusters = [('Noise (-1)' if pt == 'Noise' else f'Cluster_{(i%3)+1}') for i, pt in enumerate(ptypes)]
         data = {
-            'Cell_ID': [f'CEL-{4000 + i}' for i in range(n)],
-            'Core_Distance': cdist,
-            'Reachability_Dist': np.round(cdist * np.random.uniform(1.0, 1.4, n), 3),
-            'Epsilon_Radius': [0.5] * n,
-            'Min_Neighbors': [15] * n,
-            'Point_Type': ['Core' if c < 0.6 else ('Border' if c < 1.2 else 'Noise') for c in cdist],
-            'Assigned_Cluster': [('Noise' if c >= 1.2 else f'Cluster_{(i%3)+1}') for i, c in enumerate(cdist)]
+            'Point_ID': [f'DBSCAN-{4000 + i}' for i in range(n)],
+            'PCA_Dimension_1': np.round(np.random.normal(0, 2.2, n), 3),
+            'PCA_Dimension_2': np.round(np.random.normal(0, 1.8, n), 3),
+            'Epsilon_Radius_1.5': [1.5] * n,
+            'Min_Samples_Threshold': [5] * n,
+            'Point_Classification': ptypes,
+            'Assigned_DBSCAN_Cluster': clusters
         }
         return pd.DataFrame(data), 1420
 
@@ -285,49 +307,81 @@ def generate_sample_dataset(script_name):
     n = 100
     df = pd.DataFrame({
         'Sample_ID': range(1, n + 1),
-        'Measurement_A': np.round(np.random.uniform(10, 100, n), 2),
-        'Measurement_B': np.round(np.random.uniform(100, 500, n), 2),
-        'Classification': np.random.choice(['Category 1', 'Category 2', 'Category 3'], n)
+        'Feature_A': np.round(np.random.uniform(10, 100, n), 2),
+        'Feature_B': np.round(np.random.uniform(100, 500, n), 2),
+        'Target_Category': np.random.choice(['Category 1', 'Category 2', 'Category 3'], n)
     })
     return df, 1000
 
 def get_file_list():
     """Scan workspace directory and return dataset files with metadata."""
     ignored = {
-        'app.py', 'run_kaggle.bat', '.git', '__pycache__', 'templates', 'static', 'venv', '.env'
+        'app.py', 'run_kaggle.bat', '.git', '__pycache__', 'templates', 'static', 'venv', '.env', 'api', 'requirements.txt', 'vercel.json', 'README.md', 'cartbackupdataset.py'
     }
+    # Pre-defined display order
+    order_keys = [
+        'elwin1.py',
+        'elwin2.py',
+        'elwin3.py',
+        'elwin4.py',
+        'elwin5.py',
+        'elwin6.py',
+        'elwin7.py',
+        'elwin8.py',
+        'elwin9.py',
+        'house_price_dataset.csv',
+        'CART.csv',
+        'regression_tree.png'
+    ]
     files = []
-    for item in sorted(os.listdir(BASE_DIR)):
-        if item in ignored or item.startswith('.'):
+    found_items = set(os.listdir(BASE_DIR))
+    
+    # First add ordered keys
+    for item in order_keys:
+        if item in found_items:
+            full_path = os.path.join(BASE_DIR, item)
+            if os.path.isfile(full_path):
+                stat = os.stat(full_path)
+                ext = os.path.splitext(item)[1].lower()
+                meta = DATASET_MAP.get(item, {})
+                display_name = meta.get('display_name', item)
+                type_label = meta.get('type_label', 'CSV Table')
+                category = meta.get('category', 'Machine Learning')
+                download_as = meta.get('download_as', item)
+                file_type = 'image' if ext in ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'] else 'csv'
+                files.append({
+                    'real_name': item,
+                    'name': display_name,
+                    'display_name': display_name,
+                    'download_as': download_as,
+                    'size': stat.st_size,
+                    'size_formatted': format_size(stat.st_size),
+                    'mtime': stat.st_mtime,
+                    'type': file_type,
+                    'type_label': type_label,
+                    'category': category,
+                    'ext': ext
+                })
+                
+    # Add any other uploaded files not in order_keys
+    for item in sorted(found_items):
+        if item in ignored or item.startswith('.') or item in order_keys:
             continue
         full_path = os.path.join(BASE_DIR, item)
         if os.path.isfile(full_path):
             stat = os.stat(full_path)
             ext = os.path.splitext(item)[1].lower()
-            
-            meta = DATASET_MAP.get(item, {})
-            display_name = meta.get('display_name', item)
-            type_label = meta.get('type_label', 'CSV Table')
-            category = meta.get('category', 'Dataset')
-            download_as = meta.get('download_as', item)
-
-            # File type classification for frontend
-            if ext in ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp']:
-                file_type = 'image'
-            else:
-                file_type = 'csv'  # All tabular datasets appear as CSV in the UI
-                
             files.append({
                 'real_name': item,
-                'name': display_name,
-                'display_name': display_name,
-                'download_as': download_as,
+                'name': item,
+                'display_name': item,
+                'download_as': item,
                 'size': stat.st_size,
                 'size_formatted': format_size(stat.st_size),
                 'mtime': stat.st_mtime,
-                'type': file_type,
-                'type_label': type_label,
-                'category': category,
+                'type': 'image' if ext in ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'] else 'csv',
+                'type_label': 'File',
+                'category': 'Dataset',
                 'ext': ext
             })
     return files
@@ -419,7 +473,7 @@ def preview_file(identifier):
     meta = DATASET_MAP.get(real_file, {})
     display_name = meta.get('display_name', safe_name)
     download_as = meta.get('download_as', real_file)
-    category = meta.get('category', 'Dataset')
+    category = meta.get('category', 'Machine Learning')
 
     # If it's an image
     if ext in ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp']:
@@ -444,7 +498,7 @@ def preview_file(identifier):
             df, total_rows = generate_sample_dataset('fallback')
             col_count = df.shape[1]
     else:
-        # It's a Python script (elwin1.py .. elwin9.py): generate realistic CSV dataset!
+        # It's a Python script: generate realistic CSV dataset!
         df, total_rows = generate_sample_dataset(real_file)
         col_count = df.shape[1]
 
@@ -502,7 +556,11 @@ def upload_file():
         
     safe_name = os.path.basename(file.filename)
     dest_path = os.path.join(BASE_DIR, safe_name)
-    file.save(dest_path)
+    try:
+        file.save(dest_path)
+    except OSError:
+        tmp_path = os.path.join('/tmp', safe_name)
+        file.save(tmp_path)
     
     return jsonify({
         'status': 'success',
