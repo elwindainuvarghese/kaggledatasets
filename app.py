@@ -27,6 +27,13 @@ DATASET_MAP = {
         'download_as': 'elwin2.py',
         'description': 'Classification and Regression Trees (CART) dataset with Gini impurity calculations and node split criteria.'
     },
+    'cartbackupdataset.py': {
+        'display_name': 'CART Decision Tree Classification dataset.csv',
+        'type_label': 'CART Decision Tree Table',
+        'category': 'Decision Trees & CART',
+        'download_as': 'cartbackupdataset.py',
+        'description': 'Decision tree classification (CART) dataset using Gini impurity criteria on breast cancer cellular features.'
+    },
     'elwin3.py': {
         'display_name': 'regression trees analysis dataset.csv',
         'type_label': 'Regression Tree Table',
@@ -172,6 +179,27 @@ def generate_sample_dataset(script_name):
         }
         return pd.DataFrame(data), 2400
 
+    elif script_name == 'cartbackupdataset.py':
+        # CART Decision Tree on Wisconsin Diagnostic Features
+        n = 100
+        rad = np.round(np.random.uniform(10.5, 28.1, n), 2)
+        tex = np.round(np.random.uniform(12.0, 39.2, n), 2)
+        perim = np.round(rad * 6.28 + np.random.normal(0, 1.5, n), 1)
+        area = np.round(3.14159 * (rad / 2) ** 2 * 3.8, 1)
+        gini = np.round(np.random.uniform(0.08, 0.49, n), 3)
+        diag = ['Malignant' if r > 16.5 or t > 21.0 else 'Benign' for r, t in zip(rad, tex)]
+        data = {
+            'Patient_ID': [f'CART-WD-{i+1:04d}' for i in range(n)],
+            'Mean_Radius': rad,
+            'Mean_Texture': tex,
+            'Mean_Perimeter': perim,
+            'Mean_Area': area,
+            'Gini_Impurity': gini,
+            'Decision_Tree_Node': [f'Node_{x}' for x in np.random.randint(1, 9, n)],
+            'Target_Diagnosis': diag
+        }
+        return pd.DataFrame(data), 569
+
     elif script_name == 'elwin3.py':
         # Regression Tree Housing Analysis
         n = 100
@@ -316,12 +344,13 @@ def generate_sample_dataset(script_name):
 def get_file_list():
     """Scan workspace directory and return dataset files with metadata."""
     ignored = {
-        'app.py', 'run_kaggle.bat', '.git', '__pycache__', 'templates', 'static', 'venv', '.env', 'api', 'requirements.txt', 'vercel.json', 'README.md', 'cartbackupdataset.py'
+        'app.py', 'run_kaggle.bat', '.git', '__pycache__', 'templates', 'static', 'venv', '.env', 'api', 'requirements.txt', 'vercel.json', 'README.md'
     }
     # Pre-defined display order
     order_keys = [
         'elwin1.py',
         'elwin2.py',
+        'cartbackupdataset.py',
         'elwin3.py',
         'elwin4.py',
         'elwin5.py',
